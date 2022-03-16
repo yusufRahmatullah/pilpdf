@@ -25,13 +25,13 @@ class PilPdf:
         return self._typ == 'file'
 
     def process(self):
-        img = Image.open(self._imgfs[0])
+        img = Image.open(self._imgfs[0]).convert('RGB')
         if self.is_file or len(self._imgfs) == 1:
             img.save(self.output, 'PDF', resolution=self.resolution)
         else:
             imgs = []
             for imgf in self._imgfs[1:]:
-                imgs.append(Image.open(imgf))
+                imgs.append(Image.open(imgf).convert('RGB'))
             img.save(
                 self.output, 'PDF',
                 resolution=self.resolution, save_all=True, append_images=imgs
